@@ -1,0 +1,16 @@
+{
+  "name": "sbpanel",
+  "version": "1.0.0",
+  "description": "Panel for Stage Boxes",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Daniel Svenberg",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
