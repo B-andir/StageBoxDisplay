@@ -1,29 +1,37 @@
 const dgram = require('node:dgram');
 const { Buffer } = require('node:buffer');
+const fs = require('fs');
+const path = require('path');
 
-const broadcastSocket = dgram.createSocket('udp4');
+class UdpNetworkClient {
+    constructor() {
+        this.socket = dgram.createSocket('udp4');
 
-const msg = Buffer.from('SQ Find')
+        // Initialization of Event Listeners
+        (() => {
+            this.socket.on('listening', () => {
+                this.socket.on('message', (message, rinfo) => {
+                    // console.log('UDP Data Received: ', message);
+                });
+            });
+        })();
 
-broadcastSocket.on('listening', () => {
-    console.log('started listening');
-    broadcastSocket.setBroadcast(true);
-    setInterval(() => {
-        broadcastSocket.send(msg, 0, msg.length, 51320, '255.255.255.255', (error, bytes) => {
-            console.log('Broadcast sent');
-            if (error) console.log('Error: ', error);
-        });
-    }, 1000);
+        this.socket.bind('49418', '192.168.10.2')
+    }
 
-    broadcastSocket.on('message', (message, rinfo) => {
-        console.log('Received Hex Data: ', message.toString('hex'));
-        console.log('Message Address: ', rinfo.address);
-        console.log('Message Port: ', rinfo.port);
-        console.log('ASCII representation: ', message.toString('ascii'));
-    })
-});
+    sendData(data) {
+        if (this.socket) {
+            this.socket.send(data, 0, data.length, 51324, '192.168.10.110', (error, bytes) => {
+                if (error) console.log('Error: ', error);
+                // console.log('Sent: ', data);
+            });
+        } else {
+            console.log('Client is not connected');
+        }
+    }
+    
+}
 
+const UDPNETWORKCLIENT = new UdpNetworkClient();
 
-broadcastSocket.bind('64123', '192.168.10.2');
-
-module.exports = { };
+module.exports = UDPNETWORKCLIENT;

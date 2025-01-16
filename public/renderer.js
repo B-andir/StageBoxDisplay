@@ -1,24 +1,46 @@
-const draggable = document.getElementById('draggable');
+const { ipcRenderer } = require('electron');
 
-draggable.addEventListener('mousedown', (event) => {
-  const shiftX = event.clientX - draggable.getBoundingClientRect().left;
-  const shiftY = event.clientY - draggable.getBoundingClientRect().top;
+// const draggable = document.getElementById('draggable');
+const connectButton = document.getElementById('connect-button').addEventListener('click', (event) => {
+  ipcRenderer.send('tcpConnect');
+})
 
-  const moveAt = (pageX, pageY) => {
-    draggable.style.left = pageX - shiftX + 'px';
-    draggable.style.top = pageY - shiftY + 'px';
-  };
+const disconnectButton = document.getElementById('disconnect-button').addEventListener('click', (event) => {
+  ipcRenderer.send('disconnect');
+})
 
-  const onMouseMove = (event) => {
-    moveAt(event.pageX, event.pageY);
-  };
+const faderUp = document.getElementById('fader-up-button').addEventListener('click', (event) => {
+  ipcRenderer.send('moveFaderUp');
+})
 
-  document.addEventListener('mousemove', onMouseMove);
+const faderDown = document.getElementById('fader-down-button').addEventListener('click', (event) => {
+  ipcRenderer.send('moveFaderDown');
+})
 
-  draggable.onmouseup = () => {
-    document.removeEventListener('mousemove', onMouseMove);
-    draggable.onmouseup = null;
-  };
-});
+// draggable.addEventListener('mousedown', (event) => {
+//   const shiftX = event.clientX - draggable.getBoundingClientRect().left;
+//   const shiftY = event.clientY - draggable.getBoundingClientRect().top;
 
-draggable.ondragstart = () => false; // Disable default dragging behavior
+//   const moveAt = (pageX, pageY) => {
+//     draggable.style.left = pageX - shiftX + 'px';
+//     draggable.style.top = pageY - shiftY + 'px';
+//   };
+
+//   const onMouseMove = (event) => {
+//     moveAt(event.pageX, event.pageY);
+//   };
+
+//   document.addEventListener('mousemove', onMouseMove);
+
+//   draggable.onmouseup = () => {
+//     document.removeEventListener('mousemove', onMouseMove);
+//     draggable.onmouseup = null;
+//   };
+// });
+
+// button.addEventListener('onclick', (event) => {
+// });
+
+
+
+// draggable.ondragstart = () => false; // Disable default dragging behavior

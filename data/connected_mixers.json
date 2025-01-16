@@ -1,0 +1,14 @@
+{
+  "mixers": [
+    {
+      "name": "test",
+      "IP": "0.0.0.0",
+      "UDPFinidPort": 0
+    },
+    {
+      "name": "SQ-5 puck\u0000",
+      "IP": "192.168.10.110",
+      "UDPport": 51320
+    }
+  ]
+}
